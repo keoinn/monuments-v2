@@ -6,6 +6,12 @@ import { useAsync } from '@/composables/useAsync'
 
 const timeline = useAsync(fetchTimeline)
 const significance = useAsync(fetchSignificance)
+
+function photos(event) {
+  if (event.images?.length) return event.images
+  if (event.image) return [{ src: event.image, alt: event.imageAlt || event.title }]
+  return []
+}
 </script>
 
 <template>
@@ -23,9 +29,11 @@ const significance = useAsync(fetchSignificance)
             <div class="timeline-body">
               <h2>{{ event.title }}</h2>
               <p>{{ event.description }}</p>
-              <figure v-if="event.image" class="timeline-photo">
-                <img :src="event.image" :alt="event.imageAlt || event.title" />
-              </figure>
+              <div v-if="photos(event).length" class="timeline-photos">
+                <figure v-for="photo in photos(event)" :key="photo.src" class="timeline-photo">
+                  <img :src="photo.src" :alt="photo.alt || event.title" />
+                </figure>
+              </div>
             </div>
           </li>
         </ol>
@@ -35,7 +43,8 @@ const significance = useAsync(fetchSignificance)
       <div class="wrap">
         <SectionHead title="歷史意義" />
         <div v-if="significance.data.value" class="card-grid">
-          <article v-for="item in significance.data.value" :key="item.title" class="gold-card">
+          <article v-for="item in significance.data.value" :key="item.title" class="gold-card" :class="{ 'has-photo': item.image }">
+            <img v-if="item.image" :src="item.image" :alt="item.imageAlt || item.title" />
             <h3>{{ item.title }}</h3>
             <p>{{ item.description }}</p>
           </article>

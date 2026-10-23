@@ -1,5 +1,13 @@
 /** 公開頁內容。之後改由資料庫提供時，只替換 src/api/content.js。 */
 import history001 from '@/assets/img/history-001.webp'
+import history003 from '@/assets/img/history-003.webp'
+import history004 from '@/assets/img/history-004.webp'
+import history005 from '@/assets/img/history-005.webp'
+import history006 from '@/assets/img/history006.webp'
+import history007 from '@/assets/img/history-007.webp'
+import significance001 from '@/assets/img/significance-001.webp'
+import significance002 from '@/assets/img/significance-002.webp'
+import significance003 from '@/assets/img/significance-003.webp'
 
 export const home = {
   name: '萬選居',
@@ -36,6 +44,15 @@ export const home = {
       mark: '務',
     },
   ],
+  visit: {
+    title: '參觀方式',
+    items: [
+      '每日 09:00–12:00、14:00–17:00',
+      '由左護龍進入至三進，再由左護龍離開',
+      '第二進公廳與右護龍住戶空間不開放',
+      '15 人以上請於三日前電洽文化資產處 04-22290280',
+    ],
+  },
   statistics: [
     { value: '1873', label: '落成年份' },
     { value: '2004', label: '登錄歷史建築' },
@@ -74,6 +91,11 @@ export const timelineEvents = [
   {
     year: '1999',
     title: '九二一震災修復',
+    images: [
+      { src: history003, alt: '九二一震災後的萬選居' },
+      { src: history004, alt: '九二一震災後的萬選居' },
+      { src: history006, alt: '九二一震災後的萬選居' },
+    ],
     description:
       '正廳、門廳受損。震災後修復時，一落與二落原有的唐山灰瓦不易取得，一度改鋪紅瓦。',
   },
@@ -86,12 +108,16 @@ export const timelineEvents = [
   {
     year: '2017',
     title: '修復開工',
+    image: history005,
+    imageAlt: '萬選居修復開工',
     description:
       '2017 年 5 月 26 日，市長林佳龍主持修復開工。經費新臺幣 3,228 萬元，其中客家委員會 2,517 萬元、臺中市政府 711 萬元。',
   },
   {
     year: '2020',
     title: '修復完工',
+    image: history007,
+    imageAlt: '萬選居修復完工',
     description:
       '2020 年 3 月 23 日完工。工程恢復黑瓦、重貼子孫廊貝殼，並保留日治時期彈孔。其後由祭祀公業臺中市張萬春管理維護，並適度開放參觀。',
   },
@@ -100,16 +126,22 @@ export const timelineEvents = [
 export const historicalSignificance = [
   {
     title: '地方開發',
+    image: significance003,
+    imageAlt: '葫蘆墩圳灌溉路界圖',
     description:
       '張達京與葫蘆墩水利、農墾相關，萬選居是這支張氏家族留在翁社的宅院，也是豐原地區開發史的具體場所。',
   },
   {
     title: '建築工藝',
+    image: significance001,
+    imageAlt: '萬選居一落門楣「詒穀堂」',
     description:
       '閩客合院，材料為杉木、石材與土埆。木構偏泉州式樣。一落門楣為堂號「詒穀堂」，壁堵交趾陶傳為晉江一品堂蔡姓匠師作品。正廳另有「曲江世德」匾，以及「紹祖宗一脈真傳克勤克儉，教兒孫兩件正事惟讀惟耕」對聯。',
   },
   {
     title: '修復與居住',
+    image: significance002,
+    imageAlt: '萬選居貝殼屏門',
     description:
       '2020 年修復保留彈痕、恢復唐山灰瓦與貝殼屏門。宅院仍是私有民宅，文化記憶庫記約有二十多戶族人居住。',
   },

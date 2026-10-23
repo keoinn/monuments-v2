@@ -1,8 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import heroImage from '@/assets/img/landing-view.webp'
-import HallLine from '@/components/HallLine.vue'
-import ScrollSeal from '@/components/ScrollSeal.vue'
+import bannerImage from '@/assets/img/history-001.webp'
 import SectionHead from '@/components/SectionHead.vue'
 import { fetchAnnouncements, fetchHome, fetchMembers, fetchSignificance, fetchTimeline } from '@/api/content'
 import { useAsync } from '@/composables/useAsync'
@@ -16,6 +15,12 @@ const news = useAsync(fetchAnnouncements)
 const playing = ref(true)
 
 const memberPreview = computed(() => (members.data.value || []).slice(0, 3))
+
+function photos(event) {
+  if (event.images?.length) return event.images
+  if (event.image) return [{ src: event.image, alt: event.imageAlt || event.title }]
+  return []
+}
 </script>
 
 <template>
@@ -70,7 +75,9 @@ const memberPreview = computed(() => (members.data.value || []).slice(0, 3))
       <div class="wrap">
         <SectionHead title="關於萬選居" />
         <div v-if="home.data.value" class="about-grid">
-          <div class="seal"><ScrollSeal /></div>
+          <div class="seal">
+            <img :src="heroImage" alt="萬選居門樓" />
+          </div>
           <div>
             <p>{{ home.data.value.aboutBody }}</p>
             <p class="quote">{{ home.data.value.aboutQuote }}</p>
@@ -115,9 +122,16 @@ const memberPreview = computed(() => (members.data.value || []).slice(0, 3))
               <p>{{ feature.description }}</p>
             </RouterLink>
           </div>
-          <div class="gold-card" style="min-height: 280px; display: grid; place-items: center;">
-            <HallLine />
-          </div>
+          <article v-if="home.data.value.visit" class="gold-card visit-card">
+            <img :src="heroImage" alt="萬選居門樓" />
+            <div class="visit-copy">
+              <h3>{{ home.data.value.visit.title }}</h3>
+              <ul>
+                <li v-for="item in home.data.value.visit.items" :key="item">{{ item }}</li>
+              </ul>
+              <RouterLink class="btn-line" to="/contact">聯絡方式</RouterLink>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -125,7 +139,8 @@ const memberPreview = computed(() => (members.data.value || []).slice(0, 3))
 
     <v-window-item>
     <section class="banner">
-      <div class="hero-art"><HallLine /></div>
+      <img class="banner-photo" :src="bannerImage" alt="" />
+      <div class="banner-shade" aria-hidden="true" />
       <div class="banner-frame">
         <h2>沿革 · 自同治年間</h2>
         <p>張氏客家祖厝，2004 年登錄為歷史建築，2020 年修復完工。</p>
@@ -157,12 +172,17 @@ const memberPreview = computed(() => (members.data.value || []).slice(0, 3))
     <v-window-item>
     <section class="section alt">
       <div class="wrap">
-        <SectionHead title="歷史節點" />
-        <ul v-if="timeline.data.value" class="rule-list">
+        <SectionHead title="大事紀" />
+        <ul v-if="timeline.data.value" class="rule-list history-list">
           <li v-for="event in timeline.data.value" :key="event.year">
             <div>
               <strong>{{ event.title }}</strong>
               <p class="muted">{{ event.description }}</p>
+              <div v-if="photos(event).length" class="timeline-photos">
+                <figure v-for="photo in photos(event)" :key="photo.src" class="timeline-photo">
+                  <img :src="photo.src" :alt="photo.alt || event.title" />
+                </figure>
+              </div>
             </div>
             <span class="gold">{{ event.year }}</span>
           </li>
@@ -176,7 +196,8 @@ const memberPreview = computed(() => (members.data.value || []).slice(0, 3))
       <div class="wrap">
         <SectionHead title="歷史意義" />
         <div v-if="significance.data.value" class="card-grid">
-          <article v-for="item in significance.data.value" :key="item.title" class="gold-card">
+          <article v-for="item in significance.data.value" :key="item.title" class="gold-card" :class="{ 'has-photo': item.image }">
+            <img v-if="item.image" :src="item.image" :alt="item.imageAlt || item.title" />
             <h3>{{ item.title }}</h3>
             <p>{{ item.description }}</p>
           </article>

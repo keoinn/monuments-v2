@@ -12,6 +12,21 @@ const meetings = useAsync(fetchMeetings)
 <template>
   <div>
     <PageHero title="委員會" />
+    <section class="section alt">
+      <div class="wrap narrow">
+        <SectionHead title="理事會期程" />
+        <p v-if="meetings.data.value && !meetings.data.value.length" class="status">目前沒有公開的理事會期程。</p>
+        <ul v-else-if="meetings.data.value?.length" class="rule-list">
+          <li v-for="meeting in meetings.data.value" :key="meeting.date">
+            <div>
+              <strong>{{ meeting.title }}</strong>
+              <p class="muted">{{ meeting.description }} · {{ meeting.time }} · {{ meeting.location }}</p>
+            </div>
+            <span class="gold">{{ meeting.date }}</span>
+          </li>
+        </ul>
+      </div>
+    </section>
     <section class="section">
       <div class="wrap">
         <SectionHead title="理事會組成" />
@@ -34,21 +49,6 @@ const meetings = useAsync(fetchMeetings)
             <p v-if="member.education" class="muted" style="margin-top: 8px;">{{ member.education }}</p>
           </article>
         </div>
-      </div>
-    </section>
-    <section class="section alt">
-      <div class="wrap narrow">
-        <SectionHead title="理事會期程" />
-        <p v-if="meetings.data.value && !meetings.data.value.length" class="status">目前沒有公開的理事會期程。</p>
-        <ul v-else-if="meetings.data.value?.length" class="rule-list">
-          <li v-for="meeting in meetings.data.value" :key="meeting.date">
-            <div>
-              <strong>{{ meeting.title }}</strong>
-              <p class="muted">{{ meeting.description }} · {{ meeting.time }} · {{ meeting.location }}</p>
-            </div>
-            <span class="gold">{{ meeting.date }}</span>
-          </li>
-        </ul>
       </div>
     </section>
   </div>
