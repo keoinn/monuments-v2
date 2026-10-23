@@ -89,7 +89,7 @@ const memberPreview = computed(() => (members.data.value || []).slice(0, 3))
     <v-window-item>
     <section class="section alt">
       <div class="wrap">
-        <SectionHead title="古蹟資訊" />
+        <SectionHead title="認識萬選居" />
         <div v-if="home.data.value" class="welfare">
           <div class="welfare-col">
             <RouterLink
@@ -127,8 +127,8 @@ const memberPreview = computed(() => (members.data.value || []).slice(0, 3))
     <section class="banner">
       <div class="hero-art"><HallLine /></div>
       <div class="banner-frame">
-        <h2>沿革 · 自道光年間</h2>
-        <p>從建造、日治、戰後重建到列為古蹟與全面修復。</p>
+        <h2>沿革 · 自同治年間</h2>
+        <p>張氏客家祖厝，2004 年登錄為歷史建築，2020 年修復完工。</p>
         <RouterLink class="btn-fill" to="/history">了解歷史沿革</RouterLink>
       </div>
     </section>
@@ -138,7 +138,9 @@ const memberPreview = computed(() => (members.data.value || []).slice(0, 3))
     <section class="section">
       <div class="wrap">
         <SectionHead title="委員會成員" />
-        <div v-if="memberPreview.length" class="member-row">
+        <p v-if="members.loading.value" class="status">載入中</p>
+        <p v-else-if="!memberPreview.length" class="status">等待確認委員名單</p>
+        <div v-else class="member-row">
           <article v-for="member in memberPreview" :key="member.name" class="gold-card">
             <h3>{{ member.name }}</h3>
             <div class="mark">{{ member.name.slice(0, 1) }}</div>

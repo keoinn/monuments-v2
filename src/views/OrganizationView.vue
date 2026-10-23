@@ -15,13 +15,9 @@ const departments = useAsync(fetchDepartments)
       <div class="wrap">
         <SectionHead title="領導" />
         <div v-if="chart.data.value" class="card-grid two" style="max-width: 720px; margin: 0 auto 48px;">
-          <article class="gold-card">
-            <h3>{{ chart.data.value.chairman.name }}</h3>
-            <p>{{ chart.data.value.chairman.title }}</p>
-          </article>
-          <article class="gold-card">
-            <h3>{{ chart.data.value.viceChairman.name }}</h3>
-            <p>{{ chart.data.value.viceChairman.title }}</p>
+          <article v-for="leader in chart.data.value.leaders" :key="leader.name" class="gold-card">
+            <h3>{{ leader.name }}</h3>
+            <p>{{ leader.title }}</p>
           </article>
         </div>
         <SectionHead title="部門" />

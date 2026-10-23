@@ -1,4 +1,5 @@
 <script setup>
+import FacebookIcon from '@/components/FacebookIcon.vue'
 import { fetchContact } from '@/api/content'
 import { useAsync } from '@/composables/useAsync'
 
@@ -19,7 +20,7 @@ const links = [
     <div class="footer-grid">
       <div>
         <h2>青錢萬選 · 萬選居</h2>
-        <p>深入了解這座珍貴古蹟的歷史沿革、組織架構與文化價值。</p>
+        <p>豐原翁社的張氏客家宅院，2004 年登錄為臺中市歷史建築。</p>
       </div>
       <div>
         <h2>網站導覽</h2>
@@ -29,7 +30,15 @@ const links = [
         <h2>聯絡資訊</h2>
         <template v-if="data">
           <p v-for="item in data" :key="item.title">
-            <a :href="item.href">{{ item.value }}</a>
+            <a
+              :class="{ 'with-icon': item.icon === 'facebook' }"
+              :href="item.href"
+              :target="item.icon === 'facebook' ? '_blank' : undefined"
+              :rel="item.icon === 'facebook' ? 'noopener noreferrer' : undefined"
+            >
+              <FacebookIcon v-if="item.icon === 'facebook'" />
+              {{ item.value }}
+            </a>
           </p>
         </template>
       </div>

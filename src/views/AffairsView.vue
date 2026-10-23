@@ -30,7 +30,10 @@ const affairs = useAsync(fetchAffairs)
           <li v-for="doc in affairs.data.value.documents" :key="doc.title">
             <div>
               <strong>{{ doc.title }}</strong>
-              <p class="muted">{{ doc.description }} · {{ doc.author }} · {{ doc.type }}</p>
+              <p class="muted">
+                {{ doc.description }} · {{ doc.author }} · {{ doc.type }}
+                <a v-if="doc.href" :href="doc.href" target="_blank" rel="noopener noreferrer">開啟原文</a>
+              </p>
             </div>
             <span class="gold">{{ doc.date }}</span>
           </li>
